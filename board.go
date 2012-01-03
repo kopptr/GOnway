@@ -1,7 +1,6 @@
 
 package board
 
-import "fmt"
 import "io"
 
 type Board [][]uint8
@@ -23,20 +22,6 @@ func MakeBoard(l int, w int) (b Board) {
    return
 }
 
-// TODO take a Writer as a parameter
-func (b Board) fPrint() {
-   for _,r := range b {
-      fmt.Printf("|")
-      for _,c := range r {
-         if c == Alive {
-            fmt.Printf("¤")
-         } else {
-            fmt.Printf(" ")
-         }
-      }
-      fmt.Printf("|\n")
-   }
-}
 func (b Board) Print(w io.Writer) {
    for _,r := range b {
       w.Write([]byte("|"))

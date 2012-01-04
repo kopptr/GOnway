@@ -10,13 +10,22 @@ func main() {
    fmt.Printf("Hello ¤, world!\n")
 
    var (
-      b board.Board
+      b *board.Board = board.MakeBoard(12,15)
    )
 
-   b = board.MakeBoard(5,5)
+   fmt.Printf("Initial State:\n")
+   b.Print(os.Stdout)
 
-   b[1][4] = board.Alive
+   b.Randomize()
+   fmt.Printf("After Randomization:\n")
+   b.Print(os.Stdout)
 
+   b.Step()
+   fmt.Printf("Step 1:\n")
+   b.Print(os.Stdout)
+
+   b.Step()
+   fmt.Printf("Step 2:\n")
    b.Print(os.Stdout)
 }
 

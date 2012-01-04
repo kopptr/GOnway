@@ -4,10 +4,19 @@ import (
 	"fmt"
 	"os"
 	"./board"
+	"rand"
+	"time"
+	"flag"
 )
 
 func main() {
-	fmt.Printf("Hello ¤, world!\n")
+
+   var (
+      seed int64
+   )
+   flag.Int64Var(&seed, "seed", time.Nanoseconds(),"Integer seed for the simulation")
+   flag.Parse()
+   rand.Seed(seed)
 
 	var (
 		b *board.Board = board.MakeBoard(12, 15)

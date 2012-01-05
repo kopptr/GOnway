@@ -1,6 +1,6 @@
 package cell
 
 type CellSim interface {
-   Step()
-   String() string
+	Step()
+	String() string
 }

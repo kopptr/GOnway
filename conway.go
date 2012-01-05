@@ -2,8 +2,8 @@ package conway
 
 import (
 	"rand"
-   "bytes"
-   "fmt"
+	"bytes"
+	"fmt"
 )
 
 type ConwaySim struct {
@@ -26,7 +26,7 @@ func MakeConwaySim(rows int, cols int) (b *ConwaySim) {
 }
 
 func (b *ConwaySim) Randomize(seed int64) {
-   rand.Seed(seed)
+	rand.Seed(seed)
 	for i := 0; i < b.Rows; i++ {
 		for j := 0; j < b.Cols; j++ {
 			b.Cells[i][j] = (rand.Intn(2) == 0)
@@ -36,18 +36,18 @@ func (b *ConwaySim) Randomize(seed int64) {
 }
 
 func (b *ConwaySim) String() string {
-   buffer := bytes.NewBufferString("")
-   for i := 0; i < b.Rows; i++ {
+	buffer := bytes.NewBufferString("")
+	for i := 0; i < b.Rows; i++ {
 		for j := 0; j < b.Cols; j++ {
 			if b.Cells[i][j] {
-            fmt.Fprintf(buffer, "X")
+				fmt.Fprintf(buffer, "X")
 			} else {
-            fmt.Fprintf(buffer, " ")
+				fmt.Fprintf(buffer, " ")
 			}
 		}
-      fmt.Fprintf(buffer, "\n")
+		fmt.Fprintf(buffer, "\n")
 	}
-   return string(buffer.Bytes())
+	return string(buffer.Bytes())
 }
 
 func (b *ConwaySim) Step() {

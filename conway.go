@@ -1,18 +1,19 @@
-package board
+package conway
 
 import (
-	"io"
 	"rand"
+   "bytes"
+   "fmt"
 )
 
-type Board struct {
+type ConwaySim struct {
 	Cells [][]bool
 	Rows  int
 	Cols  int
 }
 
-func MakeBoard(rows int, cols int) (b *Board) {
-	b = new(Board)
+func MakeConwaySim(rows int, cols int) (b *ConwaySim) {
+	b = new(ConwaySim)
 	b.Rows = rows
 	b.Cols = cols
 
@@ -24,7 +25,8 @@ func MakeBoard(rows int, cols int) (b *Board) {
 	return
 }
 
-func (b *Board) Randomize() {
+func (b *ConwaySim) Randomize(seed int64) {
+   rand.Seed(seed)
 	for i := 0; i < b.Rows; i++ {
 		for j := 0; j < b.Cols; j++ {
 			b.Cells[i][j] = (rand.Intn(2) == 0)
@@ -33,20 +35,22 @@ func (b *Board) Randomize() {
 	return
 }
 
-func (b *Board) Print(w io.Writer) {
-	for i := 0; i < b.Rows; i++ {
+func (b *ConwaySim) String() string {
+   buffer := bytes.NewBufferString("")
+   for i := 0; i < b.Rows; i++ {
 		for j := 0; j < b.Cols; j++ {
 			if b.Cells[i][j] {
-				w.Write([]byte("X"))
+            fmt.Fprintf(buffer, "X")
 			} else {
-				w.Write([]byte(" "))
+            fmt.Fprintf(buffer, " ")
 			}
 		}
-		w.Write([]byte("\n"))
+      fmt.Fprintf(buffer, "\n")
 	}
+   return string(buffer.Bytes())
 }
 
-func (b *Board) Step() {
+func (b *ConwaySim) Step() {
 	var newCells [][]bool
 
 	newCells = make([][]bool, b.Rows)
@@ -60,7 +64,7 @@ func (b *Board) Step() {
 	b.Cells = newCells
 }
 
-func (b *Board) nextState(row int, col int) (next bool) {
+func (b *ConwaySim) nextState(row int, col int) (next bool) {
 	var neighbors = b.cntneighbors(row, col)
 
 	if b.Cells[row][col] { // Cell was alive
@@ -77,7 +81,7 @@ func (b *Board) nextState(row int, col int) (next bool) {
 	return
 }
 
-func (b *Board) cntneighbors(row int, col int) (neighbors int) {
+func (b *ConwaySim) cntneighbors(row int, col int) (neighbors int) {
 	neighbors = 0
 	// Top Row
 	if row > 0 {
